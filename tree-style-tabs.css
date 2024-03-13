@@ -1,0 +1,72 @@
+/*
+https://medium.com/@Aenon/firefox-hide-native-tabs-and-titlebar-f0b00bdbb88b
+ */
+
+/* hides the native tabs */
+#TabsToolbar {
+    visibility: collapse;
+}
+
+/* To hide horizontal bars */
+#main-window[tabsintitlebar="true"]:not([extradragspace="true"]) #TabsToolbar {
+    opacity: 0;
+    pointer-events: none;
+}
+
+#main-window:not([tabsintitlebar="true"]) #TabsToolbar {
+    visibility: collapse !important;
+}
+
+/* For Tree Style Tab */
+#sidebar-header{
+    font-size: 1em !important;
+    padding: 5px 2px 5px 13px !important;
+}
+
+/*
+https://github.com/piroor/treestyletab/wiki/Code-snippets-for-custom-style-rules#auto-showhide-sidebar-by-mouseover-hover
+*/
+/* Change styling of pending (unloaded) tabs */
+tab-item.discarded tab-item-substance {
+    opacity: 0.75;
+}
+
+tab-item.discarded .label-content {
+    color: red;
+}
+
+tab-item {
+    --tab-size: 25px !important;
+}
+tab-item  tab-item-substance {
+    height: var(--tab-size);
+}
+
+/*Collapse in default state and add transition*/
+#sidebar-box[sidebarcommand="treestyletab_piro_sakura_ne_jp-sidebar-action"] {
+    overflow: hidden;
+    min-width: 40px !important;
+    max-width: 40px !important;
+    transition: all 0.2s ease;
+    border-right: 1px solid #0c0c0d;
+    z-index: 2;
+}
+
+/*Expand to 260px on hover*/
+#sidebar-box[sidebarcommand="treestyletab_piro_sakura_ne_jp-sidebar-action"]:hover,
+#sidebar-box[sidebarcommand="treestyletab_piro_sakura_ne_jp-sidebar-action"] #sidebar {
+    min-width: 260px !important;
+    max-width: 260px !important;
+    z-index: 1;
+}
+
+/* show separator space between root level tabs */
+tab-item[data-level="0"] {
+    margin-top: calc(var(--tab-size) / 3); /* please change this as you like */
+}
+/* cancel needless separators on exceptions */
+tab-item[data-level="0"].pinned,
+tab-item[data-level="0"].pinned + tab-item[data-level="0"],
+tab-item[data-level="0"] + tab-item[data-level="0"]:not([data-child-ids]) {
+    margin-top: 0;
+}
